@@ -1,0 +1,17 @@
+'use strict';
+
+(function () {
+  'use strict';
+
+  angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'btford.socket-io']).run(function ($ionicPlatform) {
+    $ionicPlatform.ready(function () {
+      if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+      }
+      if (window.StatusBar) {
+        StatusBar.styleLightContent();
+      }
+    });
+  });
+})();
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLENBQUMsWUFBVztBQUNWLGNBQVksQ0FBQzs7QUFFYixTQUFPLENBQUMsTUFBTSxDQUFDLFNBQVMsRUFBRSxDQUN4QixPQUFPLEVBQ1AscUJBQXFCLEVBQ3JCLGtCQUFrQixFQUNsQixrQkFBa0IsQ0FDbkIsQ0FBQyxDQUNDLEdBQUcsQ0FBQyxVQUFTLGNBQWMsRUFBRTtBQUM1QixrQkFBYyxDQUFDLEtBQUssQ0FBQyxZQUFXO0FBQzlCLFVBQUksTUFBTSxDQUFDLE9BQU8sSUFBSSxNQUFNLENBQUMsT0FBTyxDQUFDLE9BQU8sSUFBSSxNQUFNLENBQUMsT0FBTyxDQUFDLE9BQU8sQ0FBQyxRQUFRLEVBQUU7QUFDL0UsZUFBTyxDQUFDLE9BQU8sQ0FBQyxRQUFRLENBQUMsd0JBQXdCLENBQUMsSUFBSSxDQUFDLENBQUM7T0FDekQ7QUFDRCxVQUFJLE1BQU0sQ0FBQyxTQUFTLEVBQUU7QUFDcEIsaUJBQVMsQ0FBQyxpQkFBaUIsRUFBRSxDQUFDO09BQy9CO0tBQ0YsQ0FBQyxDQUFDO0dBQ0osQ0FBQyxDQUFDO0NBRU4sQ0FBQSxFQUFHLENBQUMiLCJmaWxlIjoiYXBwLmpzIiwic291cmNlc0NvbnRlbnQiOlsiKGZ1bmN0aW9uKCkge1xuICAndXNlIHN0cmljdCc7XG5cbiAgYW5ndWxhci5tb2R1bGUoJ3N0YXJ0ZXInLCBbXG4gICAgJ2lvbmljJyxcbiAgICAnc3RhcnRlci5jb250cm9sbGVycycsXG4gICAgJ3N0YXJ0ZXIuc2VydmljZXMnLFxuICAgICdidGZvcmQuc29ja2V0LWlvJ1xuICBdKVxuICAgIC5ydW4oZnVuY3Rpb24oJGlvbmljUGxhdGZvcm0pIHtcbiAgICAgICRpb25pY1BsYXRmb3JtLnJlYWR5KGZ1bmN0aW9uKCkge1xuICAgICAgICBpZiAod2luZG93LmNvcmRvdmEgJiYgd2luZG93LmNvcmRvdmEucGx1Z2lucyAmJiB3aW5kb3cuY29yZG92YS5wbHVnaW5zLktleWJvYXJkKSB7XG4gICAgICAgICAgY29yZG92YS5wbHVnaW5zLktleWJvYXJkLmhpZGVLZXlib2FyZEFjY2Vzc29yeUJhcih0cnVlKTtcbiAgICAgICAgfVxuICAgICAgICBpZiAod2luZG93LlN0YXR1c0Jhcikge1xuICAgICAgICAgIFN0YXR1c0Jhci5zdHlsZUxpZ2h0Q29udGVudCgpO1xuICAgICAgICB9XG4gICAgICB9KTtcbiAgICB9KTtcblxufSkoKTtcbiJdLCJzb3VyY2VSb290IjoiL3NvdXJjZS8ifQ==
