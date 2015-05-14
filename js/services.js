@@ -2,12 +2,6 @@
   'use strict';
 
   angular.module('starter.services', ['LocalStorageModule'])
-
-    .run(function(Auth, $http) {
-      $http.defaults.headers
-        .common['Authorization'] = 'Basic ' + Auth.accessToken();
-    })
-
     .factory('$stream', function(socketFactory) {
       var mySocket = io.connect('http://localhost:3000');
 
@@ -16,31 +10,34 @@
       });
     })
 
-    .service('Auth', function($http, localStorageService) {
+    .service('authProvider', function($q, $http, localStorageService) {
+      var _loggedIn = false,
+          _loaded = $q.defer();
+
+      setAuthorizationHeadersFromStore();
+      me().finally(_loaded.resolve);
+
       return {
         register: register,
         login: login,
+        me: me,
         logout: logout,
-        accessToken: accessToken
+        loggedIn: loggedIn,
+        loaded: loaded
       };
 
-      function accessToken() {
-        var username = localStorageService.get('username');
-        var password = localStorageService.get('password');
-
-        console.log(username, password);
-
-        return btoa(username + ':' + password);
+      function loaded() {
+        return _loaded.promise;
       }
 
       function login(username, password) {
-        var params = {
-          username: username,
-          password: password
-        };
+        setAuthorizationHeaders(username, password);
+        return me();
+      }
 
-        return $http.post('http://localhost:3000/me', params)
-          .then(saveAuthentication.bind(this, username, password));
+      function me() {
+        return $http.get('http://localhost:3000/me')
+          .then(loggedIn.bind(this, true));
       }
 
       function register(username, password) {
@@ -49,17 +46,43 @@
           password: password
         };
 
+        setAuthorizationHeaders();
         return $http.post('http://localhost:3000/register', params)
-          .then(saveAuthentication.bind(this, username, password));
+          .then(loggedIn.bind(this, true));
       }
 
       function logout() {
-        saveAuthentication(undefined, undefined);
+        saveTokenToStore(null);
+        loggedIn(false);
       }
 
-      function saveAuthentication(username, password) {
-        localStorageService.set('username', username);
-        localStorageService.set('password', password);
+      function loggedIn(value) {
+        if (value !== undefined)
+          _loggedIn = true;
+
+        return _loggedIn;
+      }
+
+      function setAuthorizationHeaders(username, password) {
+        if (username && password) {
+          var token =  btoa(username + ':' + password);
+          $http.defaults.headers.common.Authorization = 'Basic ' + token;
+          saveTokenToStore(token);
+        }
+      }
+
+      function setAuthorizationHeadersFromStore() {
+        console.log('token', tokenFromStore());
+        if (tokenFromStore())
+          $http.defaults.headers.common.Authorization = 'Basic ' + tokenFromStore();
+      }
+
+      function saveTokenToStore(token = null) {
+        localStorageService.set('authorizationToken', token);
+      }
+
+      function tokenFromStore() {
+        return localStorageService.get('authorizationToken');
       }
     });
 })();

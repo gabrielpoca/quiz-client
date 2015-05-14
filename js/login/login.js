@@ -5,14 +5,20 @@
     .module('starter')
     .controller('LoginCtrl', LoginCtrl);
 
-  function LoginCtrl(Auth, $state) {
+  function LoginCtrl(authProvider, $state) {
     var ctrl = this;
 
+    authProvider.me()
+      .then(redirect);
+
     ctrl.login = function(username, password) {
-      Auth.login(username, password)
-        .then(function() {
-          $state.go('game.users');
-        });
+      authProvider
+        .login(username, password)
+        .then(redirect);
     };
+
+    function redirect() {
+      $state.go('game.users');
+    }
   }
 })();

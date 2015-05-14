@@ -1,6 +1,4 @@
 (function() {
-  'use strict';
-
   angular
     .module('starter')
     .service('Users', Users);
@@ -9,18 +7,20 @@
     var _users = [];
 
     return {
-      all: all
+      all: all,
+      sync: sync
     };
 
     function all(options) {
-      options = options || {};
-
-      if (options.sync) {
-        $http.get('http://localhost:3000/users')
-          .then(console.log);
-      }
-
       return _users;
+    }
+
+    function sync() {
+      return $http.get('http://localhost:3000/users')
+        .then(function(response) {
+          _users = response.data;
+          return _users;
+        });
     }
   }
 })();

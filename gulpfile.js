@@ -49,6 +49,7 @@ gulp.task('templates', function() {
 gulp.task('watch', function() {
   gulp.watch(paths.sass, ['sass']);
   gulp.watch(paths.js, ['babel']);
+  gulp.watch(paths.templates, ['templates']);
 });
 
 gulp.task('install', ['git-check'], function() {

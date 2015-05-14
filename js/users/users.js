@@ -1,6 +1,4 @@
 (function() {
-  'use strict';
-
   angular
     .module('starter')
     .controller('UsersCtrl', UsersCtrl);
@@ -8,12 +6,11 @@
   function UsersCtrl(Users) {
     var ctrl = this;
 
-    Users.all({ sync: true });
+    ctrl.users = Users.all();
 
-    ctrl.users = [
-      { name: 'Gabriel', score: 20 },
-      { name: 'Ronaldo', score: 30 },
-      { name: 'Bruno', score: 40 }
-    ];
+    Users.sync()
+      .then(function(users) {
+        ctrl.users = users;
+      });
   }
 })();
