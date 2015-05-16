@@ -11,8 +11,9 @@ var sh = require('shelljs');
 
 var paths = {
   sass: ['./scss/**/*.scss'],
-  js: ['./js/**/*.js'],
-  templates: ['./js/**/*.html']
+  js: ['./app/**/*.js'],
+  templates: ['./app/*.html', './app/**/*.html'],
+  other: ['./app/**/*.png']
 };
 
 var handleError = function(err) {
@@ -20,7 +21,7 @@ var handleError = function(err) {
   this.emit('end');
 };
 
-gulp.task('default', ['sass', 'babel', 'templates']);
+gulp.task('default', ['sass', 'babel', 'templates', 'other']);
 
 gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')
@@ -38,18 +39,24 @@ gulp.task('babel', function() {
     .pipe(babel())
     .on('error', handleError)
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./www/app'));
+    .pipe(gulp.dest('./www'));
 });
 
 gulp.task('templates', function() {
   return gulp.src(paths.templates)
-    .pipe(gulp.dest('./www/app'));
+    .pipe(gulp.dest('./www'));
+});
+
+gulp.task('other', function() {
+  return gulp.src(paths.other)
+    .pipe(gulp.dest('./www'));
 });
 
 gulp.task('watch', function() {
   gulp.watch(paths.sass, ['sass']);
   gulp.watch(paths.js, ['babel']);
   gulp.watch(paths.templates, ['templates']);
+  gulp.watch(paths.other, ['other']);
 });
 
 gulp.task('install', ['git-check'], function() {
