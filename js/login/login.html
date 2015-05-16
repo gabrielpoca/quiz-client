@@ -10,11 +10,38 @@
         <input type="password" ng-model="user.password">
       </label>
     </div>
-    <div class="padding">
-      <button class="button button-block button-positive"
-        ng-click="ctrl.login(user.username, user.password)">
-        Sign-In
-      </button>
+
+    <div class="row"
+      ng-show="ctrl.state == 'login'">
+      <div class="col col-75">
+        <button class="button button-block button-positive"
+          ng-click="ctrl.login(user.username, user.password)">
+          Sign-In
+        </button>
+      </div>
+
+      <div class="col col-25">
+        <button class="button button-stable button-block button-outline"
+          ng-click="ctrl.state = 'register'">Register
+        </button>
+      </div>
     </div>
+
+    <div class="row"
+      ng-show="ctrl.state == 'register'">
+      <div class="col col-75">
+        <button class="button button-block button-positive"
+          ng-click="ctrl.register(user.username, user.password)">
+          Register
+        </button>
+      </div>
+
+      <div class="col col-25">
+        <button class="button button-stable button-block button-outline"
+          ng-click="ctrl.state = 'login'">Sign-In
+        </button>
+      </div>
+    </div>
+
   </ion-content>
 </ion-view>

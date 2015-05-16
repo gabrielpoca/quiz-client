@@ -46,8 +46,9 @@
           password: password
         };
 
-        setAuthorizationHeaders();
+        logout();
         return $http.post('http://localhost:3000/register', params)
+          .then(setAuthorizationHeaders.bind(this, username, password))
           .then(loggedIn.bind(this, true));
       }
 
@@ -64,6 +65,7 @@
       }
 
       function setAuthorizationHeaders(username, password) {
+        console.log(arguments);
         if (username && password) {
           var token =  btoa(username + ':' + password);
           $http.defaults.headers.common.Authorization = 'Basic ' + token;

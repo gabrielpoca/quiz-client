@@ -3,13 +3,34 @@
     .module('starter')
     .controller('CurrentCtrl', CurrentCtrl);
 
-  function CurrentCtrl(Game) {
+  function CurrentCtrl(Game, $stream, $rootScope) {
     var ctrl = this;
 
+    ctrl.answerId = null;
+
+    ctrl.answer = answer;
+
     Game.current()
-      .then(function(current) {
-        ctrl.current = current;
-        console.log(current);
-      });
+      .then(setQuestion);
+
+    $stream.on('game:question', function(current) {
+      setQuestion(current);
+      $rootScope.$apply();
+    });
+    
+    function answer(questionId, answerId) {
+      Game.answer(questionId, answerId)
+        .then(function() {
+          ctrl.answerId = answerId;
+        })
+        .catch(function() {
+          ctrl.answerId = null;
+        });
+    }
+
+    function setQuestion(question) {
+      ctrl.current = question;
+      ctrl.answerId = null;
+    }
   }
 })();

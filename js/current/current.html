@@ -1,10 +1,17 @@
 <ion-view view-title="Dashboard">
   <ion-content class="padding">
-    <div class="list card" ng-repeat="answer in ctrl.current.answers">
-      <div class="item item-divider">Recent Updates</div>
-      <div class="item item-body">
-        <div>{{ answer.body }}</div>
-      </div>
+    <div class="question">
+      <h1>{{ ctrl.current.body }}</h1>
     </div>
+    <ion-list class="list-answer">
+      <ion-radio
+        class="item-answer"
+        ng-repeat="answer in ctrl.current.answers"
+        ng-model="ctrl.answerId"
+        ng-click="ctrl.answer(ctrl.current.id, answer.id)"
+        ng-value="answer.id">
+        {{ answer.body }}
+      </ion-radio>
+    </ion-list>
   </ion-content>
 </ion-view>

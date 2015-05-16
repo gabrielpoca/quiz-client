@@ -5,7 +5,8 @@
 
   function Game($http) {
     return {
-      current: current
+      current: current,
+      answer: answer
     };
 
     function current() {
@@ -13,6 +14,13 @@
         .then(function(response) {
           return response.data;
         });
+    }
+
+    function answer(questionId, answerId) {
+      return $http.post('http://localhost:3000/answers', {
+        questionId: questionId,
+        answerId: answerId
+      });
     }
   }
 })();

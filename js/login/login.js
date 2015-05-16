@@ -8,12 +8,20 @@
   function LoginCtrl(authProvider, $state) {
     var ctrl = this;
 
+    ctrl.state = 'login';
+
     authProvider.me()
       .then(redirect);
 
     ctrl.login = function(username, password) {
       authProvider
         .login(username, password)
+        .then(redirect);
+    };
+
+    ctrl.register = function(username, password) {
+      authProvider
+        .register(username, password)
         .then(redirect);
     };
 

@@ -3,14 +3,21 @@
     .module('starter')
     .controller('UsersCtrl', UsersCtrl);
 
-  function UsersCtrl(Users) {
+  function UsersCtrl(Users, $stream) {
     var ctrl = this;
 
-    ctrl.users = Users.all();
+    setUsers(Users.all());
 
     Users.sync()
-      .then(function(users) {
-        ctrl.users = users;
-      });
+      .then(setUsers);
+
+    $stream.on('users:update', function(user) {
+      Users.sync()
+        .then(setUsers);
+    });
+
+    function setUsers(users) {
+      ctrl.users = users;
+    }
   }
 })();
