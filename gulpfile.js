@@ -11,9 +11,9 @@ var sh = require('shelljs');
 
 var paths = {
   sass: ['./scss/**/*.scss'],
-  js: ['./app/**/*.js'],
-  templates: ['./app/*.html', './app/**/*.html'],
-  other: ['./app/**/*.png']
+  js: ['./src/**/*.js'],
+  templates: ['./src/*.html', './src/**/*.html'],
+  other: ['./src/**/*.png']
 };
 
 var handleError = function(err) {

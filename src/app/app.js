@@ -3,7 +3,6 @@
 
   angular.module('starter', [
     'ionic',
-    'starter.controllers',
     'starter.services',
     'btford.socket-io'
   ])

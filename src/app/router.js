@@ -46,7 +46,7 @@
       .state('game', {
         url: '/game',
         abstract: true,
-        templateUrl: 'app/game/game.html'
+        templateUrl: 'app/layout/layout.html'
       })
       .state('game.users', {
         url: '/users',
@@ -70,8 +70,8 @@
         url: '/account',
         views: {
           'game.account': {
-            templateUrl: 'templates/tab-account.html',
-            controller: 'AccountCtrl'
+            templateUrl: 'app/account/account.html',
+            controller: 'AccountCtrl as ctrl'
           }
         }
       });
