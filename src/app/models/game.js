@@ -3,21 +3,13 @@
     .module('starter')
     .service('Game', Game);
 
-  function Game($http) {
+  function Game($http, ENV) {
     return {
-      current: current,
       answer: answer
     };
 
-    function current() {
-      return $http.get('http://localhost:3000/questions/current')
-        .then(function(response) {
-          return response.data;
-        });
-    }
-
     function answer(questionId, answerId) {
-      return $http.post('http://localhost:3000/answers', {
+      return $http.post(`${ENV.HOST}/answers`, {
         questionId: questionId,
         answerId: answerId
       });

@@ -1,5 +1,5 @@
 {
   "name": "quest-mobile",
   "app_id": "",
-  "gulpStartupTasks": ["sass", "babel", "watch", "templates", "other"]
+  "gulpStartupTasks": ["default", "watch"]
 }

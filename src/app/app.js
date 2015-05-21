@@ -2,6 +2,7 @@
   'use strict';
 
   angular.module('starter', [
+    'quiz.constants',
     'ionic',
     'starter.services',
     'btford.socket-io'

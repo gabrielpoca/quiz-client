@@ -1,16 +1,16 @@
 (function() {
   'use strict';
 
-  angular.module('starter.services', ['LocalStorageModule'])
-    .factory('$stream', function(socketFactory) {
-      var mySocket = io.connect('http://localhost:3000');
+  angular.module('starter.services', ['LocalStorageModule', 'quiz.constants'])
+    .factory('$stream', function(socketFactory, ENV) {
+      var mySocket = io.connect(`${ENV.HOST}`);
 
       return socketFactory({
         ioSocket: mySocket
       });
     })
 
-    .service('authProvider', function($q, $http, localStorageService) {
+    .service('authProvider', function($q, $http, localStorageService, ENV) {
       var _loggedIn = false,
           _loaded = $q.defer();
 
@@ -36,7 +36,7 @@
       }
 
       function me() {
-        return $http.get('http://localhost:3000/me')
+        return $http.get(`${ENV.HOST}/me`)
           .then(loggedIn.bind(this, true));
       }
 
@@ -47,7 +47,7 @@
         };
 
         logout();
-        return $http.post('http://localhost:3000/register', params)
+        return $http.post(`${ENV.HOST}/register`, params)
           .then(setAuthorizationHeaders.bind(this, username, password))
           .then(loggedIn.bind(this, true));
       }

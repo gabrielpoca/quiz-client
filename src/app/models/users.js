@@ -3,7 +3,7 @@
     .module('starter')
     .service('Users', Users);
 
-  function Users($http) {
+  function Users($http, ENV) {
     var _users = [];
 
     return {
@@ -16,7 +16,7 @@
     }
 
     function sync() {
-      return $http.get('http://localhost:3000/users')
+      return $http.get(`${ENV.HOST}/users`)
         .then(function(response) {
           _users = response.data;
           return _users;

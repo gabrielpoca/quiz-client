@@ -7,15 +7,15 @@
     var ctrl = this;
 
     ctrl.answerId = null;
-
     ctrl.answer = answer;
-
-    Game.current()
-      .then(setQuestion);
 
     $stream.on('game:question', function(current) {
       setQuestion(current);
       $rootScope.$apply();
+    });
+ 
+    $stream.on('game:result', function(current) {
+      console.log(current);
     });
     
     function answer(questionId, answerId) {

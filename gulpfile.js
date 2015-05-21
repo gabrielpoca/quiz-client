@@ -4,7 +4,9 @@ var babel = require('gulp-babel');
 var concat = require('gulp-concat');
 var gutil = require('gulp-util');
 var minifyCss = require('gulp-minify-css');
+var ngConfig = require('gulp-ng-config');
 var rename = require('gulp-rename');
+var runSequence = require('gulp-run-sequence');
 var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var sh = require('shelljs');
@@ -13,7 +15,8 @@ var paths = {
   sass: ['./scss/**/*.scss'],
   js: ['./src/**/*.js'],
   templates: ['./src/*.html', './src/**/*.html'],
-  other: ['./src/**/*.png']
+  other: ['./src/**/*.png'],
+  constants: ['./constants.json']
 };
 
 var handleError = function(err) {
@@ -21,7 +24,25 @@ var handleError = function(err) {
   this.emit('end');
 };
 
-gulp.task('default', ['sass', 'babel', 'templates', 'other']);
+gulp.task('default', function(cb) {
+  runSequence('constants', ['sass', 'babel', 'templates', 'other'], cb);
+});
+
+gulp.task('constants', function() {
+  return gulp.src('constants.json')
+    .pipe(ngConfig('quiz.constants', {
+      environment: 'production'
+    }))
+    .pipe(gulp.dest('www/app'))
+});
+
+gulp.task('local-constants', function() {
+  return gulp.src('constants.json')
+    .pipe(ngConfig('quiz.constants', {
+      environment: 'local'
+    }))
+    .pipe(gulp.dest('www/app'))
+});
 
 gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')

@@ -1,0 +1,12 @@
+{
+  "local": {
+    "ENV": {
+      "HOST": "http://localhost:3000"
+    }
+  },
+  "production": {
+    "ENV": {
+      "HOST": "http://178.62.80.104:3000"
+    }
+  }
+}
