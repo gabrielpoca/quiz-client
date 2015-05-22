@@ -4,8 +4,8 @@
   angular.module('starter', [
     'quiz.constants',
     'ionic',
-    'starter.services',
-    'btford.socket-io'
+    'btford.socket-io',
+    'LocalStorageModule'
   ])
 
   .run(function($ionicPlatform) {

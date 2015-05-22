@@ -16,7 +16,6 @@ var paths = {
   js: ['./src/**/*.js'],
   templates: ['./src/*.html', './src/**/*.html'],
   other: ['./src/**/*.png'],
-  constants: ['./constants.json']
 };
 
 var handleError = function(err) {
