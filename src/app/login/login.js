@@ -26,13 +26,7 @@
     };
 
     function redirect() {
-      $ionicHistory.clearCache();
-      // clearCache runs inside a timeout, so unless we also
-      // wait for the current digest cycle to finish the views won't
-      // be cleared until after the change has happened.
-      $timeout(function() {
-        $state.go('game.users');
-      });
+      $state.go('game.users');
     }
   }
 })();

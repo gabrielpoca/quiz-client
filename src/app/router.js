@@ -36,6 +36,14 @@
       });
   }
 
+  function ensureAuthentication($q, $timeout, $state, authProvider) {
+    if (!authProvider.loggedIn()) {
+      $timeout(()=>{$state.go('login');});
+      return $q.reject();
+    }
+    return $q.when();
+  }
+
   function Router($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('login', {
@@ -46,7 +54,10 @@
       .state('game', {
         url: '/game',
         abstract: true,
-        templateUrl: 'app/layout/layout.html'
+        templateUrl: 'app/layout/layout.html',
+        resolve: {
+          ensureAuthentication: ensureAuthentication
+        }
       })
       .state('game.users', {
         url: '/users',
@@ -76,6 +87,6 @@
         }
       });
 
-    $urlRouterProvider.otherwise('/game/users');
+    $urlRouterProvider.otherwise('/login');
   }
 })();
