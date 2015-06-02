@@ -5,7 +5,8 @@
 
   function authProvider($q, $http, localStorageService, ENV) {
     var _loggedIn = false,
-      _loaded = $q.defer();
+      _loaded = $q.defer(),
+      _me = null;
 
     setAuthorizationHeadersFromStore();
     me().finally(_loaded.resolve);
@@ -29,7 +30,11 @@
     }
 
     function me() {
+      if(_me)
+        return $q.when(_me);
+
       return $http.get(`${ENV.HOST}/me`)
+        .then(memoizeMe)
         .then(loggedIn.bind(this, true));
     }
 
@@ -55,6 +60,10 @@
         _loggedIn = true;
 
       return _loggedIn;
+    }
+
+    function memoizeMe(me) {
+      _me = me;
     }
 
     function setAuthorizationHeaders(username, password) {

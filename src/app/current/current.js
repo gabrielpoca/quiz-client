@@ -1,34 +1,20 @@
 (function() {
   angular
     .module('starter')
-    .controller('CurrentCtrl', CurrentCtrl)
-    .controller('WinnersCtrl', WinnersCtrl);
+    .controller('CurrentCtrl', CurrentCtrl);
 
-  function WinnersCtrl($rootScope) {
-    var ctrl = this;
-
-    ctrl.modal = null;
-
-    ctrl.close = close;
-
-    function close() {
-      $rootScope.$broadcast('modal:close');
-    }
-  }
-
-  function CurrentCtrl(Game, $stream, $ionicModal, $rootScope) {
+  function CurrentCtrl(Game, $stream, $ionicModal, $rootScope, Users) {
     var ctrl = this;
 
     ctrl.answerId = null;
     ctrl.answer = answer;
 
+    $stream.on('game:winners', showWinnersModal);
     $stream.on('game:question', function(current) {
+      hideWinnersModal();
       setQuestion(current);
       $rootScope.$apply();
     });
-
-    $stream.on('game:winners', showWinners);
-    $rootScope.$on('modal:close', removeWinnersModal);
 
     function answer(questionId, answerId) {
       Game.answer(questionId, answerId)
@@ -45,24 +31,13 @@
       ctrl.answerId = null;
     }
 
-    function showWinners(winners) {
-      createWinnersModal().then(function(modal) {
-        removeWinnersModal();
-        ctrl.modal = modal;
-        ctrl.modal.show();
-      });
+    function showWinnersModal(winnersIds) {
+      ctrl.showWinners = true;
+      ctrl.winners = Users.whereId(winnersIds);
     }
 
-    function createWinnersModal() {
-      return $ionicModal.fromTemplateUrl('/app/current/winners_modal.html', {
-        animation: 'slide-in-up'
-      });
-    }
-
-    function removeWinnersModal() {
-      if (!ctrl.modal) return;
-      ctrl.modal.remove();
-      ctrl.modal = null;
+    function hideWinnersModal() {
+      ctrl.showWinners = false;
     }
   }
 })();
