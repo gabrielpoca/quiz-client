@@ -33,9 +33,7 @@
       if(_me)
         return $q.when(_me);
 
-      return $http.get(`${ENV.HOST}/me`)
-        .then(memoizeMe)
-        .then(loggedIn.bind(this, true));
+      return $http.get(`${ENV.HOST}/me`).then(setLoggedIn);
     }
 
     function register(username, password) {
@@ -62,8 +60,10 @@
       return _loggedIn;
     }
 
-    function memoizeMe(me) {
+    function setLoggedIn(me) {
+      _loggedIn = true;
       _me = me;
+      return me;
     }
 
     function setAuthorizationHeaders(username, password) {

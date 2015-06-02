@@ -5,7 +5,7 @@
     .module('starter')
     .controller('LoginCtrl', LoginCtrl);
 
-  function LoginCtrl(authProvider, $state) {
+  function LoginCtrl(authProvider, $state, $ionicHistory, $timeout) {
     var ctrl = this;
 
     ctrl.state = 'login';
@@ -26,7 +26,13 @@
     };
 
     function redirect() {
-      $state.go('game.users');
+      $ionicHistory.clearCache();
+      // clearCache runs inside a timeout, so unless we also
+      // wait for the current digest cycle to finish the views won't
+      // be cleared until after the change has happened.
+      $timeout(function() {
+        $state.go('game.users');
+      });
     }
   }
 })();
