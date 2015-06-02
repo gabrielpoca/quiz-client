@@ -17,7 +17,7 @@
     };
   }
 
-  function WinnersCtrl(_, $stream, $scope, $ionicModal, authProvider) {
+  function WinnersCtrl($state, _, $stream, $scope, $ionicModal, authProvider) {
     var ctrl = this;
     var currentUser = null;
 
@@ -38,6 +38,8 @@
       ctrl.modal = modal;
 
       $scope.$watch('open', (open) => {
+        if ($state.current.name != 'game.current') return;
+
         if (open)
           ctrl.modal.show();
         else
