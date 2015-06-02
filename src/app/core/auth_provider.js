@@ -5,7 +5,8 @@
 
   function authProvider($q, $http, localStorageService, ENV) {
     var _loggedIn = false,
-      _loaded = $q.defer();
+      _loaded = $q.defer(),
+      _me = null;
 
     setAuthorizationHeadersFromStore();
     me().finally(_loaded.resolve);
@@ -29,8 +30,10 @@
     }
 
     function me() {
-      return $http.get(`${ENV.HOST}/me`)
-        .then(loggedIn.bind(this, true));
+      if(_me)
+        return $q.when(_me);
+
+      return $http.get(`${ENV.HOST}/me`).then(setLoggedIn);
     }
 
     function register(username, password) {
@@ -55,6 +58,12 @@
         _loggedIn = true;
 
       return _loggedIn;
+    }
+
+    function setLoggedIn(me) {
+      _loggedIn = true;
+      _me = me;
+      return me;
     }
 
     function setAuthorizationHeaders(username, password) {

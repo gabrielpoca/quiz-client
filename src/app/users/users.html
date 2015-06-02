@@ -2,7 +2,7 @@
   <ion-content class="padding">
     <ion-list>
       <ion-item
-        ng-repeat="user in ctrl.users"
+        ng-repeat="user in ctrl.users()"
         type="item-text-wrap">
 
         {{ user.username }}

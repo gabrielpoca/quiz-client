@@ -5,7 +5,7 @@
     .module('starter')
     .controller('LoginCtrl', LoginCtrl);
 
-  function LoginCtrl(authProvider, $state) {
+  function LoginCtrl(authProvider, $state, $ionicHistory, $timeout) {
     var ctrl = this;
 
     ctrl.state = 'login';
