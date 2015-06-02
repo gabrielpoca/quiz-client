@@ -1,6 +1,7 @@
 (function() {
   angular
     .module('starter')
+    .controller('WinnersCtrl', WinnersCtrl)
     .directive('winners', winners);
 
   function winners() {
@@ -12,48 +13,40 @@
         open: '='
       },
       controllerAs: 'ctrl',
-      controller: function($rootScope, $stream, $scope, $ionicModal, authProvider) {
-        var ctrl = this;
-        var _me = null;
-
-        // This is returning true/false instead of the current user. API problem?
-        authProvider
-          .me()
-          .then((me) => _me = me);
-
-        // FIXME: for this to work authProvider.me() should return an user.
-        $scope.currentUserWon = function() {
-          if(!$scope.winners) return false;
-
-          var won = false;
-          $scope.winners.forEach((winner) => {
-            if(winner.id === _me.id)
-              won = true;
-          });
-
-          return won;
-        };
-
-        $scope.close = function() {
-          $scope.open = false;
-        };
-
-        $ionicModal.fromTemplateUrl('app/directives/winners/winners.html', {
-          animation: 'slide-in-up',
-          scope: $scope
-        }).then(function(modal) {
-          ctrl.modal = modal;
-
-          $scope.$watch('open', (open) => {
-            if (open) {
-              ctrl.modal.show();
-            } else {
-              ctrl.modal.hide();
-            }
-          });
-        });
-
-      }
+      controller: 'WinnersCtrl'
     };
-  };
+  }
+
+  function WinnersCtrl(_, $stream, $scope, $ionicModal, authProvider) {
+    var ctrl = this;
+    var currentUser = null;
+
+    authProvider.me()
+      .then((user) => currentUser = user);
+
+    $scope.close = closeModal;
+    $scope.currentUserWon = function() {
+      return !!_.findWhere($scope.winners, { id: currentUser.id });
+    };
+
+    $ionicModal.fromTemplateUrl('app/directives/winners/winners.html', {
+      animation: 'slide-in-up',
+      scope: $scope
+    }).then(initializeModal);
+
+    function initializeModal(modal) {
+      ctrl.modal = modal;
+
+      $scope.$watch('open', (open) => {
+        if (open)
+          ctrl.modal.show();
+        else
+          ctrl.modal.hide();
+      });
+    }
+
+    function closeModal() {
+      $scope.open = false;
+    }
+  }
 })();

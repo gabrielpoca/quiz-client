@@ -60,10 +60,10 @@
       return _loggedIn;
     }
 
-    function setLoggedIn(me) {
+    function setLoggedIn(response) {
       _loggedIn = true;
-      _me = me;
-      return me;
+      _me = response.data;
+      return _me;
     }
 
     function setAuthorizationHeaders(username, password) {

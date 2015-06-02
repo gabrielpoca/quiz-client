@@ -9,9 +9,9 @@
     ctrl.answerId = null;
     ctrl.answer = answer;
 
-    $stream.on('game:winners', showWinnersModal);
-    $stream.on('game:question', function(current) {
-      hideWinnersModal();
+    $stream.on('game:winners', showWinners);
+    $stream.on('game:question', (current) => {
+      hideWinners();
       setQuestion(current);
       $rootScope.$apply();
     });
@@ -31,12 +31,12 @@
       ctrl.answerId = null;
     }
 
-    function showWinnersModal(winnersIds) {
+    function showWinners(winnersIds) {
       ctrl.showWinners = true;
       ctrl.winners = Users.whereId(winnersIds);
     }
 
-    function hideWinnersModal() {
+    function hideWinners() {
       ctrl.showWinners = false;
     }
   }
