@@ -17,10 +17,9 @@
     });
 
     function answer(questionId, answerId) {
+      ctrl.answerId = answerId;
+
       Game.answer(questionId, answerId)
-        .then(function() {
-          ctrl.answerId = answerId;
-        })
         .catch(function() {
           ctrl.answerId = null;
         });
