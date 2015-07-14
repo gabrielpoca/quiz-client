@@ -8,7 +8,7 @@
     <link href="css/ionic.app.css" rel="stylesheet">
 
     <script src="lib/socket.io-client/socket.io.js"></script>
-    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/ionic/release/js/ionic.bundle.js"></script>
     <script src="lib/angular-socket-io/socket.js"></script>
     <script src="lib/angular-local-storage/dist/angular-local-storage.js"></script>
     <script src="lib/underscore/underscore.js"></script>
@@ -36,11 +36,11 @@
 
     <script src="app/router.js"></script>
   </head>
-  <body ng-app="starter">
+  <body ng-app="starter" animation="slide-left-right-ios7">
     <ion-nav-bar class="bar-positive">
       <ion-nav-back-button>
       </ion-nav-back-button>
     </ion-nav-bar>
-    <ion-nav-view></ion-nav-view>
+    <ion-nav-view animation="slide-left-right"></ion-nav-view>
   </body>
 </html>

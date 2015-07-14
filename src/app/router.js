@@ -80,7 +80,7 @@
       .state('game.account', {
         url: '/account',
         views: {
-          'game.account': {
+          'game-account': {
             templateUrl: 'app/account/account.html',
             controller: 'AccountCtrl as ctrl'
           }

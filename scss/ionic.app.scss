@@ -15,7 +15,7 @@ $stable:                          #EDF4F8 !default;
 $positive:                        #35C7FC !default;
 $dark:                            #444 !default;
 
-$ionicons-font-path: "../lib/ionic/fonts" !default;
+$ionicons-font-path: "../lib/ionic/release/fonts" !default;
 
 $base-background-color: $stable;
 $base-color: #333;
@@ -52,4 +52,8 @@ $tabs-icon-size: 52px !default;
 .question {
   padding: 1rem 0;
   text-align: center;
+}
+
+[nav-view-transition="ios"][nav-view-direction="forward"], [nav-view-transition="ios"][nav-view-direction="back"] {
+  background-color: transparent;
 }
